@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ProductInformationDemo.Models.ProductMst>
+
+
+<h1>ProductDetail</h1>
+
+<div class=" container">
+    <table>
+        @foreach (var item in Model)
+        {
+        <tr>
+        <td>
+            ProductName
+        </td>
+       <td>
+        @*  // @HtmlHelperDisplayExtensions()*@
+       </td>
+        </tr>
+        }
+    </table>
+</div>
+
+
+

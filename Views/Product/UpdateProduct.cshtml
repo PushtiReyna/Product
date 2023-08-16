@@ -1,0 +1,66 @@
+﻿@model ProductInformationDemo.Models.ProductMst
+
+
+<div class="row">
+    <div class=" col-4 offset-4">
+        <form asp-action="UpdateProduct" method="post">
+
+             <div class="mb-3">
+                <label class=" form-label" hidden>ProductIdd</label>
+                <input type="text" class=" form-control" asp-for=ProductId readonly  hidden/>
+
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ProductName</label>
+                <input type="text" class=" form-control" asp-for=ProductName placeholder="Enter ProductName" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ProductDescription</label>
+                <input type="text" class=" form-control" asp-for=ProductDescription placeholder="Enter ProductDescription" />
+                <span asp-validation-for="ProductDescription" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ProductPrice</label>
+                <input type="number" class=" form-control" asp-for=ProductPrice placeholder="Enter ProductPrice" />
+                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">OpeningStock</label>
+                <input type="number" class=" form-control" asp-for=OpeningStock placeholder="Enter OpeningStock" />
+                <span asp-validation-for="OpeningStock" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">BuyStock</label>
+                <input type="number" class=" form-control" asp-for=BuyStock placeholder="Enter BuyStock" />
+                <span asp-validation-for="BuyStock" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+            <label class=" form-label">SellStock</label>
+            <input type="number" class=" form-control" asp-for=SellStock placeholder="Enter SellStock" />
+            <span asp-validation-for="SellStock" class="text-danger"></span>
+            </div>
+
+             <div class="mb-3">
+            <label class=" form-label">ClosingStock</label>
+            <input type="number" class=" form-control" asp-for=ClosingStock placeholder="Enter ClosingStock"   />
+            </div>
+
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger m-1 text-white" asp-action="ProductList">Cancel</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+

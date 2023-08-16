@@ -1,0 +1,56 @@
+﻿@model ProductInformationDemo.Models.ProductMst
+
+<div class="row">
+    <div class=" col-4 offset-4">
+        <form asp-action="DeleteProduct" method="post">
+
+            <div class="mb-3">
+                <label class=" form-label" hidden>ProductId</label>
+                <input type="text" class=" form-control" asp-for=ProductId readonly hidden />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ProductName</label>
+                <input type="text" class=" form-control" asp-for=ProductName readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ProductDescription</label>
+                <input type="text" class=" form-control" asp-for=ProductDescription readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ProductPrice</label>
+                <input type="number" class=" form-control" asp-for=ProductPrice readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">OpeningStock</label>
+                <input type="number" class=" form-control" asp-for=OpeningStock readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">BuyStock</label>
+                <input type="number" class=" form-control" asp-for=BuyStock readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">SellStock</label>
+                <input type="number" class=" form-control" asp-for=SellStock readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class=" form-label">ClosingStock</label>
+                <input type="number" class=" form-control" asp-for=ClosingStock readonly />
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <a class="btn btn-danger m-1 text-white" asp-action="ProductList">Cancel</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

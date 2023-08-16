@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProductInformationDemo.Models.ProductMst>
+
+
+
+<div class="container">
+    <div class="row">
+    <div class="col-12">
+        <h1 class="text-center">List Of Product</h1>
+            <a class=" btn btn-success m-1" asp-action="AddProduct">New Entry</a>
+
+        <table class="table">
+            <tr class="text-center">
+                    <th>ProductId</th>
+                    <th>ProductName</th>
+                    <th>ProductDescription</th>
+                    <th>ProductPrice</th>
+                    <th>OpeningStock</th>
+                    <th>BuyStock</th>
+                    <th>SellStock</th>
+                    <th>ClosingStock</th>
+                    <th>Actions</th>
+            </tr>
+            @foreach(var item in Model)
+            {
+                <tr class="Text-center">
+                        <td>@item.ProductId</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductDescription</td>
+                        <td>@item.ProductPrice</td>
+                        <td>@item.OpeningStock</td>
+                        <td>@item.BuyStock</td>
+                        <td>@item.SellStock</td>
+                        <td>@item.ClosingStock</td>
+                        <td>
+                            <a class=" btn btn-warning m-1" asp-action="ProductDetail" asp-route-id="@item.ProductId">View</a>
+                            <a class=" btn btn-warning m-1" asp-action="UpdateProduct" asp-route-id="@item.ProductId">Edit</a>
+                            <a class=" btn btn-danger m-1" asp-action="DeleteProduct" asp-route-id="@item.ProductId">Delete</a>
+                        </td>
+                </tr>
+            }
+        </table>
+    </div>
+    </div>
+</div>
+
