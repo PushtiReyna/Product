@@ -17,17 +17,25 @@ namespace ProductInformationDemo.Controllers
         {
             var productList = _db.ProductMsts.ToList();
             return View(productList);
-           
+
         }
 
         public IActionResult ProductDetail(int id)
         {
-            var productDetail = _db.ProductMsts.FirstOrDefault(x => x.ProductId == id);
-            if (productDetail != null)
+            try
             {
-                return View(productDetail);
+                var productDetail = _db.ProductMsts.FirstOrDefault(x => x.ProductId == id);
+                if (productDetail != null)
+                {
+                    return View(productDetail);
+                }
+                return RedirectToAction("ProductList");
             }
-            return RedirectToAction("ProductList");
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+            }
         }
 
         [HttpGet]
@@ -42,25 +50,45 @@ namespace ProductInformationDemo.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var productAdd = new ProductMst()
-                    {
-                        ProductName = product.ProductName,
-                        ProductDescription = product.ProductDescription,
-                        ProductPrice = product.ProductPrice,
-                        OpeningStock = product.OpeningStock,
-                        BuyStock = product.BuyStock,
-                        ClosingStock = (product.OpeningStock + product.BuyStock),
 
-                    };
-                    _db.ProductMsts.Add(productAdd);
-                    _db.SaveChanges();
-                    return RedirectToAction("ProductList");
+                    if (_db.ProductMsts.Where(u => u.ProductName == product.ProductName /*|| u.ProductDescription == product.ProductDescription*/).Any())
+                    {
+                        TempData["ErrorMessage"] = "ProductName /*or Product Description are*/  already exists.";
+                        return View();
+                    }
+
+                    else
+                    {
+                        var productAdd = new ProductMst()
+                        {
+                            ProductName = product.ProductName,
+                            ProductDescription = product.ProductDescription,
+                            ProductPrice = product.ProductPrice,
+                            OpeningStock = product.OpeningStock,
+                            BuyStock = product.BuyStock,
+                            ClosingStock = (product.OpeningStock + product.BuyStock),
+
+                        };
+                        //if (productAdd.BuyStock <= productAdd.OpeningStock)
+                        //{
+                        _db.ProductMsts.Add(productAdd);
+                        _db.SaveChanges();
+                        return RedirectToAction("ProductList");
+                        //}
+                        //else
+                        //{
+                        //    TempData["ErrorMessage"] = "Buy stock  must be less or equal to the opening stock";
+                        //    return View();
+                        //}
+                    }
+
                 }
                 return View();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View("Error");
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
             }
         }
 
@@ -76,83 +104,121 @@ namespace ProductInformationDemo.Controllers
                 }
                 return RedirectToAction("ProductList");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View("Error");
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
             }
         }
 
         [HttpPost]
         public ActionResult UpdateProduct(ProductMst product)
         {
-            var productUpdate = _db.ProductMsts.FirstOrDefault(x => x.ProductId == product.ProductId);
-
-            if (productUpdate != null)
+            try
             {
-                productUpdate.ProductName = product.ProductName;
-                productUpdate.ProductDescription = product.ProductDescription;
-                productUpdate.ProductPrice = product.ProductPrice;
-                productUpdate.OpeningStock = product.OpeningStock;
-                productUpdate.BuyStock = product.BuyStock;
-                productUpdate.SellStock = product.SellStock;
+                var productUpdate = _db.ProductMsts.FirstOrDefault(x => x.ProductId == product.ProductId);
 
-                if(productUpdate.SellStock <= productUpdate.BuyStock)
+                if (_db.ProductMsts.Where(u => u.ProductName == productUpdate.ProductName).Any())
                 {
-                    productUpdate.ClosingStock = (productUpdate.OpeningStock - productUpdate.BuyStock);
+                    TempData["ErrorMessage"] = "ProductName or Product Description are  already exists.";
+                    return View();
                 }
 
-                //if()
+                //else
                 //{
+                if (productUpdate != null)
+                {
+                    productUpdate.ProductName = product.ProductName;
+                    productUpdate.ProductDescription = product.ProductDescription;
+                    productUpdate.ProductPrice = product.ProductPrice;
+                    productUpdate.OpeningStock = product.OpeningStock;
+                    productUpdate.BuyStock = product.BuyStock;
+                    productUpdate.SellStock = product.SellStock;
 
+
+                    if (productUpdate.SellStock <= (productUpdate.OpeningStock + productUpdate.BuyStock)) /*&& productUpdate.BuyStock <= productUpdate.OpeningStock*/
+                    {
+                        productUpdate.ClosingStock = ((productUpdate.OpeningStock + productUpdate.BuyStock) - productUpdate.SellStock);
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "please check sell stock must be less than opening stock + Buy Stock. ";
+                        return View();
+                    }
+                        _db.Entry(productUpdate).State = EntityState.Modified;
+                        _db.SaveChanges();
+                        return RedirectToAction("ProductList");
+                }
                 //}
-               
-
-                _db.Entry(productUpdate).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("ProductList");
+                return View();
             }
-            return View();
-            
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+            }
+
         }
 
-        [HttpGet]
         public IActionResult DeleteProduct(int id)
         {
             try
             {
-                var productDetail = _db.ProductMsts.FirstOrDefault(x => x.ProductId == id);
-                if (productDetail != null)
-                {
-                    return View(productDetail);
-                }
-                return RedirectToAction("ProductList");
-            }
-            catch (Exception)
-            {
-                return View("Error");
-            }
-        }
-
-        [HttpPost]
-        public IActionResult DeleteProduct(ProductMst product)
-        {
-            try
-            {
-                var productDelete = _db.ProductMsts.FirstOrDefault(x => x.ProductId == product.ProductId);
+                var productDelete = _db.ProductMsts.FirstOrDefault(x => x.ProductId == id);
                 if (productDelete != null)
                 {
                     _db.ProductMsts.Remove(productDelete);
                     _db.SaveChanges();
                     return RedirectToAction("ProductList");
                 }
-                return View();
+                return RedirectToAction("ProductList");
             }
-
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View("Error");
-            } 
-            
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("ProductList");
+            }
         }
+
+        //[HttpGet]
+        //public IActionResult DeleteProduct(int id)
+        //{
+        //    try
+        //    {
+        //        var productDetail = _db.ProductMsts.FirstOrDefault(x => x.ProductId == id);
+        //        if (productDetail != null)
+        //        {
+        //            return View(productDetail);
+        //        }
+        //        return RedirectToAction("ProductList");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return View("Error");
+        //    }
+        //}
+
+        //[HttpPost]
+        //public IActionResult DeleteProduct(ProductMst product)
+        //{
+        //    try
+        //    {
+        //        var productDelete = _db.ProductMsts.FirstOrDefault(x => x.ProductId == product.ProductId);
+        //        if (productDelete != null)
+        //        {
+        //            _db.ProductMsts.Remove(productDelete);
+        //            _db.SaveChanges();
+        //            return RedirectToAction("ProductList");
+        //        }
+        //        return View();
+        //    }
+
+        //    catch (Exception)
+        //    {
+        //        return View("Error");
+        //    } 
+
+        //}
+
     }
 }

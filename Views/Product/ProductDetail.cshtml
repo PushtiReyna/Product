@@ -1,23 +1,67 @@
-﻿@model IEnumerable<ProductInformationDemo.Models.ProductMst>
+﻿@model ProductInformationDemo.Models.ProductMst
+
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p class="text-center text-danger"> @errorMessage</p>
+}
+
+<h1 >ProductDetail</h1>
 
 
-<h1>ProductDetail</h1>
+<table>
+    <tr>
+       <td>@Html.DisplayNameFor(model => model.ProductName)</td>
+       <td>&nbsp;</td>
+       <td>@Html.DisplayFor(model => model.ProductName)</td>
+    </tr>
 
-<div class=" container">
-    <table>
-        @foreach (var item in Model)
-        {
-        <tr>
-        <td>
-            ProductName
-        </td>
-       <td>
-        @*  // @HtmlHelperDisplayExtensions()*@
-       </td>
-        </tr>
-        }
-    </table>
-</div>
+    <tr>
+       <td>@Html.DisplayNameFor(model => model.ProductDescription)</td>
+       <td>&nbsp;</td>
+        <td>@Html.DisplayFor(model => model.ProductDescription)</td>
+    </tr>
+
+    <tr>
+       <td>@Html.DisplayNameFor(model => model.ProductPrice)</td>
+       <td>&nbsp;</td>
+        <td>@Html.DisplayFor(model => model.ProductPrice)</td>
+    </tr>
+
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.OpeningStock)</td>
+        <td>&nbsp;</td>
+        <td>@Html.DisplayFor(model => model.OpeningStock)</td>
+    </tr>
+
+    <tr>
+       <td>@Html.DisplayNameFor(model => model.BuyStock)</td>
+       <td>&nbsp;</td>
+        <td>@Html.DisplayFor(model => model.BuyStock)</td>
+    </tr>
+
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.SellStock)</td>
+        <td>&nbsp;</td>
+        <td>@Html.DisplayFor(model => model.SellStock)</td>
+    </tr>
+
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.ClosingStock)</td>
+        <td>&nbsp;</td>
+        <td>@Html.DisplayFor(model => model.ClosingStock)</td>
+    </tr>
+
+</table>
+        
+                
+            
+     
+
+   
+
 
 
 

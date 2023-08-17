@@ -1,5 +1,12 @@
 ﻿@model ProductInformationDemo.Models.ProductMst
 
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p class="text-center text-danger"> @errorMessage</p>
+}
 
 <div class="row">
     <div class=" col-4 offset-4">
@@ -59,3 +66,8 @@
 
 </div>
 
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

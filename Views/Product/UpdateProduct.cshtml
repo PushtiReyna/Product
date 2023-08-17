@@ -1,6 +1,14 @@
 ﻿@model ProductInformationDemo.Models.ProductMst
 
 
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p class="text-center text-danger"> @errorMessage</p>
+}
+
 <div class="row">
     <div class=" col-4 offset-4">
         <form asp-action="UpdateProduct" method="post">
@@ -46,11 +54,11 @@
             <input type="number" class=" form-control" asp-for=SellStock placeholder="Enter SellStock" />
             <span asp-validation-for="SellStock" class="text-danger"></span>
             </div>
-
+@*
              <div class="mb-3">
             <label class=" form-label">ClosingStock</label>
             <input type="number" class=" form-control" asp-for=ClosingStock placeholder="Enter ClosingStock"   />
-            </div>
+            </div>*@
 
 
             <div class="col-12">
@@ -63,4 +71,10 @@
     </div>
 
 </div>
+
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
