@@ -53,7 +53,7 @@ namespace ProductInformationDemo.Controllers
 
                     if (_db.ProductMsts.Where(u => u.ProductName == product.ProductName /*|| u.ProductDescription == product.ProductDescription*/).Any())
                     {
-                        TempData["ErrorMessage"] = "ProductName /*or Product Description are*/  already exists.";
+                        TempData["ErrorMessage"] = "ProductName already exists.";
                         return View();
                     }
 
@@ -118,16 +118,9 @@ namespace ProductInformationDemo.Controllers
             {
                 var productUpdate = _db.ProductMsts.FirstOrDefault(x => x.ProductId == product.ProductId);
 
-                if (_db.ProductMsts.Where(u => u.ProductName == productUpdate.ProductName).Any())
-                {
-                    TempData["ErrorMessage"] = "ProductName or Product Description are  already exists.";
-                    return View();
-                }
-
-                //else
-                //{
                 if (productUpdate != null)
                 {
+                    productUpdate.ProductId = product.ProductId;
                     productUpdate.ProductName = product.ProductName;
                     productUpdate.ProductDescription = product.ProductDescription;
                     productUpdate.ProductPrice = product.ProductPrice;
@@ -135,21 +128,30 @@ namespace ProductInformationDemo.Controllers
                     productUpdate.BuyStock = product.BuyStock;
                     productUpdate.SellStock = product.SellStock;
 
+                    var closingStock = productUpdate.OpeningStock + productUpdate.BuyStock;
 
-                    if (productUpdate.SellStock <= (productUpdate.OpeningStock + productUpdate.BuyStock)) /*&& productUpdate.BuyStock <= productUpdate.OpeningStock*/
+                    if (productUpdate.SellStock <= closingStock)
                     {
                         productUpdate.ClosingStock = ((productUpdate.OpeningStock + productUpdate.BuyStock) - productUpdate.SellStock);
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "please check sell stock must be less than opening stock + Buy Stock. ";
+                        TempData["ErrorMessage"] = "please check sell stock must be less than" + closingStock;
                         return View();
                     }
+
+                    if (_db.ProductMsts.Where(u => u.ProductName == productUpdate.ProductName && u.ProductId != productUpdate.ProductId).Any())
+                    {
+                        TempData["ErrorMessage"] = "ProductName is already exists.";
+                        return View();
+                    }
+                    else
+                    {
                         _db.Entry(productUpdate).State = EntityState.Modified;
                         _db.SaveChanges();
                         return RedirectToAction("ProductList");
+                    }
                 }
-                //}
                 return View();
             }
             catch (Exception ex)

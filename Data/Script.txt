@@ -24,3 +24,45 @@ ALTER TABLE Product_Mst
 
    ALTER TABLE Product_Mst
  ALTER COLUMN ClosingStock int NOT NULL;
+
+ // change to float
+ ALTER TABLE Product_Mst
+ ALTER COLUMN ProductPrice float NOT NULL;
+
+ALTER TABLE Product_Mst
+ ALTER COLUMN OpeningStock float NOT NULL;
+
+ ALTER TABLE Product_Mst
+ ALTER COLUMN BuyStock float NOT NULL;
+
+  ALTER TABLE Product_Mst
+ ALTER COLUMN SellStock float NOT NULL;
+
+   ALTER TABLE Product_Mst
+ ALTER COLUMN ClosingStock float NOT NULL;ALTER TABLE Product_Mst
+ ALTER COLUMN OpeningStock int NOT NULL;
+
+ ALTER TABLE Product_Mst
+ ALTER COLUMN BuyStock int NOT NULL;
+
+  ALTER TABLE Product_Mst
+ ALTER COLUMN SellStock int NOT NULL;
+
+   ALTER TABLE Product_Mst
+ ALTER COLUMN ClosingStock int NOT NULL;
+
+ // change to float
+ ALTER TABLE Product_Mst
+ ALTER COLUMN ProductPrice float NOT NULL;
+
+ALTER TABLE Product_Mst
+ ALTER COLUMN OpeningStock float NOT NULL;
+
+ ALTER TABLE Product_Mst
+ ALTER COLUMN BuyStock float NOT NULL;
+
+  ALTER TABLE Product_Mst
+ ALTER COLUMN SellStock float NOT NULL;
+
+   ALTER TABLE Product_Mst
+ ALTER COLUMN ClosingStock float NOT NULL;

@@ -30,7 +30,6 @@ public partial class ProductDbContext : DbContext
 
             entity.Property(e => e.ProductDescription).HasMaxLength(100);
             entity.Property(e => e.ProductName).HasMaxLength(50);
-            entity.Property(e => e.ProductPrice).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);

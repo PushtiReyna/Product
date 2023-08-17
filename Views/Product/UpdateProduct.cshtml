@@ -14,43 +14,43 @@
         <form asp-action="UpdateProduct" method="post">
 
              <div class="mb-3">
-                <label class=" form-label" hidden>ProductIdd</label>
+                <label class=" form-label" hidden>ProductId</label>
                 <input type="text" class=" form-control" asp-for=ProductId readonly  hidden/>
 
             </div>
 
             <div class="mb-3">
-                <label class=" form-label">ProductName</label>
+                <label class=" form-label">Product Name</label>
                 <input type="text" class=" form-control" asp-for=ProductName placeholder="Enter ProductName" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label class=" form-label">ProductDescription</label>
+                <label class=" form-label">Product Description</label>
                 <input type="text" class=" form-control" asp-for=ProductDescription placeholder="Enter ProductDescription" />
                 <span asp-validation-for="ProductDescription" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label class=" form-label">ProductPrice</label>
+                <label class=" form-label">Product Price</label>
                 <input type="number" class=" form-control" asp-for=ProductPrice placeholder="Enter ProductPrice" />
                 <span asp-validation-for="ProductPrice" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label class=" form-label">OpeningStock</label>
+                <label class=" form-label">Opening Stock</label>
                 <input type="number" class=" form-control" asp-for=OpeningStock placeholder="Enter OpeningStock" />
                 <span asp-validation-for="OpeningStock" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label class=" form-label">BuyStock</label>
+                <label class=" form-label">Buy Stock</label>
                 <input type="number" class=" form-control" asp-for=BuyStock placeholder="Enter BuyStock" />
                 <span asp-validation-for="BuyStock" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-            <label class=" form-label">SellStock</label>
+            <label class=" form-label">Sell Stock</label>
             <input type="number" class=" form-control" asp-for=SellStock placeholder="Enter SellStock" />
             <span asp-validation-for="SellStock" class="text-danger"></span>
             </div>
