@@ -2,10 +2,11 @@
 
 @{
     var errorMessage = TempData["ErrorMessage"]?.ToString();
+    var exceptionMessage = TempData["ExceptionMessage"]?.ToString();
 }
-@if (!string.IsNullOrWhiteSpace(errorMessage))
+@if (!string.IsNullOrWhiteSpace(exceptionMessage))
 {
-    <p class="text-center text-danger"> @errorMessage</p>
+    <p class="text-center text-danger"> @exceptionMessage</p>
 }
 
 <div class="row">
@@ -16,6 +17,12 @@
                 <label class=" form-label">Product Name</label>
                 <input type="text" class=" form-control" asp-for=ProductName placeholder="Enter ProductName" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
+                
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <p class="text-danger" id='message'> @errorMessage</p>
+                }
+
             </div>
 
             <div class="mb-3">
@@ -41,6 +48,8 @@
                 <input type="number" class=" form-control" asp-for=BuyStock placeholder="Enter BuyStock" />
                 <span asp-validation-for="BuyStock" class="text-danger"></span>
             </div>
+
+           
 
             @*<div class="mb-3">
                 <label class=" form-label">SellStock</label>
@@ -70,4 +79,10 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#message').hide(3000);
+        });
+    </script>
 }

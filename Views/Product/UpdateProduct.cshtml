@@ -1,21 +1,23 @@
 ﻿@model ProductInformationDemo.Models.ProductMst
 
-
 @{
     var errorMessage = TempData["ErrorMessage"]?.ToString();
+    var exceptionMessage = TempData["ExceptionMessage"]?.ToString();
+    var sellStockMessage = TempData["SellStockMessage"]?.ToString();
 }
-@if (!string.IsNullOrWhiteSpace(errorMessage))
+@if (!string.IsNullOrWhiteSpace(exceptionMessage))
 {
-    <p class="text-center text-danger"> @errorMessage</p>
+    <p class="text-center text-danger"> @exceptionMessage</p>
 }
+
 
 <div class="row">
     <div class=" col-4 offset-4">
         <form asp-action="UpdateProduct" method="post">
 
-             <div class="mb-3">
+            <div class="mb-3">
                 <label class=" form-label" hidden>ProductId</label>
-                <input type="text" class=" form-control" asp-for=ProductId readonly  hidden/>
+                <input type="text" class=" form-control" asp-for=ProductId readonly hidden />
 
             </div>
 
@@ -23,6 +25,10 @@
                 <label class=" form-label">Product Name</label>
                 <input type="text" class=" form-control" asp-for=ProductName placeholder="Enter ProductName" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <p class="text-danger" id='message'> @errorMessage</p>
+                }
             </div>
 
             <div class="mb-3">
@@ -42,22 +48,71 @@
                 <input type="number" class=" form-control" asp-for=OpeningStock placeholder="Enter OpeningStock" />
                 <span asp-validation-for="OpeningStock" class="text-danger"></span>
             </div>
+             @{
+            <div class="mb-3">
+                <label class=" form-label">Do You Want To Buy or sell</label>
+                <br />
+                <label>Buy</label>
+                <input type="radio" name="Buy" value="Buy" checked id="buyselection"  />
+                <label>Sell</label>
+                <input type="radio" name="Buy" value="Sell" id="sellselection"  />
 
+            </div>
+            
+
+          
+@*
             <div class="mb-3">
                 <label class=" form-label">Buy Stock</label>
-                <input type="number" class=" form-control" asp-for=BuyStock placeholder="Enter BuyStock" />
+                <input type="number" class=" form-control" asp-for=BuyStock placeholder="Enter BuyStock" id="namebuy"  />
+                
                 <span asp-validation-for="BuyStock" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-            <label class=" form-label">Sell Stock</label>
-            <input type="number" class=" form-control" asp-for=SellStock placeholder="Enter SellStock" />
-            <span asp-validation-for="SellStock" class="text-danger"></span>
-            </div>
-@*
-             <div class="mb-3">
-            <label class=" form-label">ClosingStock</label>
-            <input type="number" class=" form-control" asp-for=ClosingStock placeholder="Enter ClosingStock"   />
+                <label class=" form-label">Sell Stock</label>
+                <input type="number" class=" form-control" asp-for=SellStock placeholder="Enter SellStock" id="namesell" disabled />
+                <span asp-validation-for="SellStock" class="text-danger"></span>
+
+                @if (!string.IsNullOrWhiteSpace(sellStockMessage))
+                {
+                    <p class="text-danger" id='message'> @sellStockMessage</p>
+                }
+
+            </div>*@
+
+           
+                    if (buyselection == checked)
+                //if (Convert.ToBoolean(ViewBag.Buy))
+            
+                {
+                    <div class="mb-3">
+                        <label class=" form-label">Buy Stock</label>
+                        <input type="number" class=" form-control" asp-for=BuyStock placeholder="Enter BuyStock" id="namebuy"  />
+                        <span asp-validation-for="BuyStock" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <label class=" form-label">Sell Stock</label>
+                        <input type="number" class=" form-control" asp-for=SellStock placeholder="Enter SellStock" id="namesell" disabled />
+                        <span asp-validation-for="SellStock" class="text-danger"></span>
+
+                        @if (!string.IsNullOrWhiteSpace(sellStockMessage))
+                        {
+                            <p class="text-danger" id='message'> @sellStockMessage</p>
+                        }
+
+                    </div>
+                }
+            
+           
+            }
+
+           @* <div class="mb-3">
+                <label class=" form-label">ClosingStock</label>
+                <input type="number" class=" form-control" asp-for=ClosingStock placeholder="Enter ClosingStock" />
             </div>*@
 
 
@@ -76,5 +131,13 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#message').hide(3000);
+        });
+    </script>
+
 }
+
 

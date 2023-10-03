@@ -33,7 +33,7 @@ namespace ProductInformationDemo.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                TempData["ExceptionMessage"] = ex.Message;
                 return View();
             }
         }
@@ -87,7 +87,7 @@ namespace ProductInformationDemo.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                TempData["ExceptionMessage"] = ex.Message;
                 return View();
             }
         }
@@ -106,16 +106,34 @@ namespace ProductInformationDemo.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                TempData["ExceptionMessage"] = ex.Message;
                 return View();
             }
         }
 
+        //protected void RadioButton_CheckedChanged(object sender, EventArgs e, bool buyselection, bool sellselection )
+        //{
+        //    if(buyselection == true) 
+        //    {
+
+        //        ViewBag.Buy = buyselection;
+
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Sell = sellselection;
+        //    }
+        //}
+
+
         [HttpPost]
-        public ActionResult UpdateProduct(ProductMst product)
+        public ActionResult UpdateProduct(ProductMst product/*,bool buy,bool sell*/)
         {
             try
             {
+                //ViewBag.Buy = buy;
+                //ViewBag.Sell = sell;
+
                 var productUpdate = _db.ProductMsts.FirstOrDefault(x => x.ProductId == product.ProductId);
 
                 if (productUpdate != null)
@@ -130,13 +148,15 @@ namespace ProductInformationDemo.Controllers
 
                     var closingStock = productUpdate.OpeningStock + productUpdate.BuyStock;
 
+            
+
                     if (productUpdate.SellStock <= closingStock)
                     {
                         productUpdate.ClosingStock = ((productUpdate.OpeningStock + productUpdate.BuyStock) - productUpdate.SellStock);
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "please check sell stock must be less than" + closingStock;
+                        TempData["SellStockMessage"] = "please check sell stock must be less than" + closingStock;
                         return View();
                     }
 
@@ -156,7 +176,7 @@ namespace ProductInformationDemo.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                TempData["ExceptionMessage"] = ex.Message;
                 return View();
             }
 
@@ -177,7 +197,7 @@ namespace ProductInformationDemo.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                TempData["ExceptionMessage"] = ex.Message;
                 return RedirectToAction("ProductList");
             }
         }

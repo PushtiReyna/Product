@@ -1,65 +1,70 @@
 ﻿@model ProductInformationDemo.Models.ProductMst
 
+
 @{
-    var errorMessage = TempData["ErrorMessage"]?.ToString();
+    var exceptionMessage = TempData["ExceptionMessage"]?.ToString();
 }
-@if (!string.IsNullOrWhiteSpace(errorMessage))
+@if (!string.IsNullOrWhiteSpace(exceptionMessage))
 {
-    <p class="text-center text-danger"> @errorMessage</p>
+    <p class="text-center text-danger"> @exceptionMessage</p>
 }
+
 
 <h1 >ProductDetail</h1>
 
-
-<table>
+<div class="row">
+    <div class=" col-3 ">
+<table class="table border-secondary" border="1" align="center" >
     <tr>
        <td>@Html.DisplayNameFor(model => model.ProductName)</td>
-       <td>&nbsp;</td>
+ 
        <td>@Html.DisplayFor(model => model.ProductName)</td>
     </tr>
 
     <tr>
        <td>@Html.DisplayNameFor(model => model.ProductDescription)</td>
-       <td>&nbsp;</td>
+       
         <td>@Html.DisplayFor(model => model.ProductDescription)</td>
     </tr>
 
     <tr>
        <td>@Html.DisplayNameFor(model => model.ProductPrice)</td>
-       <td>&nbsp;</td>
+     
         <td>@Html.DisplayFor(model => model.ProductPrice)</td>
     </tr>
 
     <tr>
         <td>@Html.DisplayNameFor(model => model.OpeningStock)</td>
-        <td>&nbsp;</td>
+       
         <td>@Html.DisplayFor(model => model.OpeningStock)</td>
     </tr>
 
     <tr>
        <td>@Html.DisplayNameFor(model => model.BuyStock)</td>
-       <td>&nbsp;</td>
+       
         <td>@Html.DisplayFor(model => model.BuyStock)</td>
     </tr>
 
     <tr>
         <td>@Html.DisplayNameFor(model => model.SellStock)</td>
-        <td>&nbsp;</td>
+    
         <td>@Html.DisplayFor(model => model.SellStock)</td>
     </tr>
 
     <tr>
         <td>@Html.DisplayNameFor(model => model.ClosingStock)</td>
-        <td>&nbsp;</td>
+       
         <td>@Html.DisplayFor(model => model.ClosingStock)</td>
     </tr>
-
 </table>
+
 <form>
 
 <button type="submit" class="btn btn-primary m-1" asp-action="ProductList">Back To Home</button>
-
+           
 </form>
+    </div>
+</div>
         
                 
             
